@@ -1,0 +1,58 @@
+/* HORIZONTE ELETIVO */
+
+CREATE TABLE alunos (
+    id_alunos int NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    matricula int NOT NULL,
+    nome_aluno varchar (250) NOT NULL,
+    data_nascimento date NOT NULL,
+    sexo varchar (10) NOT NULL,
+    raca_cor varchar (20) NOT NULL,
+    num_classe int NOT NULL,
+    curso varchar (40) NOT NULL,
+    turma varchar (20) NOT NULL
+);
+
+CREATE TABLE eletiva (
+    id_eletiva int NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    nome_eletiva varchar (20) NOT NULL,
+    nome_professor varchar (250) NOT NULL,
+    quant_vagas int NOT NULL
+);
+
+CREATE TABLE turmas (
+    id_turmas int NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    nome_turma varchar (20) NOT NULL,
+    curso varchar (40) NOT NULL,
+    modalidade varchar (50) NOT NULL,
+    quant_vagas int NOT NULL
+);
+
+CREATE TABLE aluno_eletiva (
+    fk_eletiva_id_eletiva int,
+    fk_alunos_id_alunos int
+);
+
+CREATE TABLE turma_aluno (
+    fk_turmas_id_turmas int,
+    fk_eletiva_id_eletiva int
+);
+ 
+ALTER TABLE aluno_eletiva ADD CONSTRAINT FK_aluno_eletiva_1
+    FOREIGN KEY (fk_eletiva_id_eletiva)
+    REFERENCES eletiva (id_eletiva)
+    ON DELETE RESTRICT;
+ 
+ALTER TABLE aluno_eletiva ADD CONSTRAINT FK_aluno_eletiva_2
+    FOREIGN KEY (fk_alunos_id_alunos)
+    REFERENCES alunos (id_alunos)
+    ON DELETE RESTRICT;
+ 
+ALTER TABLE turma_aluno ADD CONSTRAINT FK_turma_aluno_1
+    FOREIGN KEY (fk_turmas_id_turmas)
+    REFERENCES turmas (id_turmas)
+    ON DELETE RESTRICT;
+ 
+ALTER TABLE turma_aluno ADD CONSTRAINT FK_turma_aluno_2
+    FOREIGN KEY (fk_eletiva_id_eletiva)
+    REFERENCES eletiva (id_eletiva)
+    ON DELETE RESTRICT;
